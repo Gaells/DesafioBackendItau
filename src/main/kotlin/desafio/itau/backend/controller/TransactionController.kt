@@ -14,19 +14,19 @@ class TransactionController(
     private val transactionService: TransactionService
 ) {
 
-    @PostMapping("/transaction")
+    @PostMapping("/transacao")
     fun create(@Valid @RequestBody request: TransactionRequestDTO): ResponseEntity<Void> {
         transactionService.save(request)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
-    @DeleteMapping("/transaction")
+    @DeleteMapping("/transacao")
     fun deleteAll(): ResponseEntity<Void> {
         transactionService.clear()
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping("/statistics")
+    @GetMapping("/estatistica")
     fun getStatistics(): ResponseEntity<StatisticResponseDTO> {
         val stats = transactionService.getStatistics()
         return ResponseEntity.ok(stats)
