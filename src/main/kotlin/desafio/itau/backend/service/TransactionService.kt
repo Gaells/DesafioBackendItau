@@ -1,4 +1,4 @@
-package desafio.itau.backend.Service
+package desafio.itau.backend.service
 
 import desafio.itau.backend.dto.StatisticResponseDTO
 import desafio.itau.backend.dto.TransactionRequestDTO
@@ -7,10 +7,12 @@ import desafio.itau.backend.model.Transaction
 import desafio.itau.backend.repository.TransactionRepository
 import org.springframework.stereotype.Service
 import java.time.OffsetDateTime
+import desafio.itau.backend.config.StatisticsProperties
 
 @Service
 class TransactionService (
-  private val repository: TransactionRepository
+  private val repository: TransactionRepository,
+  private val statisticsProperties: StatisticsProperties
 ) {
 
   fun save(dto: TransactionRequestDTO) {
@@ -28,7 +30,9 @@ class TransactionService (
 
   fun getStatistics(): StatisticResponseDTO  {
     val now = OffsetDateTime.now()
-    val lastMinute = repository.list().filter { it.dateTime.isAfter(now.minusSeconds(60)) }
+    val window = statisticsProperties.windowOnSeconds
+    val lastMinute = repository.list().filter { it.dateTime.isAfter(now.minusSeconds(window)) }
+    
 
     val count = lastMinute.size.toLong()
     val sum = lastMinute.sumOf { it.value }

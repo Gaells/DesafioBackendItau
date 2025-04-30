@@ -2,7 +2,7 @@ package desafio.itau.backend.controller
 
 import desafio.itau.backend.dto.TransactionRequestDTO
 import desafio.itau.backend.dto.StatisticResponseDTO
-import desafio.itau.backend.Service.TransactionService
+import desafio.itau.backend.service.TransactionService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
